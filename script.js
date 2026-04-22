@@ -43,6 +43,7 @@ class Intro extends Phaser.Scene {
 
         // press to continue 
         this.input.on('pointerdown', () => this.scene.start('Logo'));
+        
 
     }
 
@@ -61,10 +62,7 @@ class Intro extends Phaser.Scene {
 }
 
 
-// TODO: make logo images transpent
-// add sound of egg falling / cracking
-// add egg falling down and cracking into a double yolk
-// scaling for everything else?
+// TODO: scaling for everything else?
 class Logo extends Phaser.Scene {
     constructor() {
         super('Logo');
@@ -96,8 +94,8 @@ class Logo extends Phaser.Scene {
         // punch out yolk
         this.tweens.add({
             targets: this.logoYolk,
-            scaleX: 0.25,
-            scaleY: 0.25,
+            scaleX: 0.45,
+            scaleY: 0.45,
             duration: 400,
             delay: 1850,
             ease: 'Back.out'
@@ -140,7 +138,7 @@ class Logo extends Phaser.Scene {
                 this.sound.play('eggCrack');
                 this.eggWhole.setAlpha(0);      // make eggCracked visible in its place
                 this.eggCracked.setAlpha(1);
-        
+
                 this.tweens.add({
                     targets: this.eggCracked,
                     scaleX: 0.25,
@@ -151,8 +149,8 @@ class Logo extends Phaser.Scene {
 
             }
         })
-        this.cameras.main.fadeOut(2500);
-        this.time.delayedCall(2200, () => {
+        this.cameras.main.fadeOut(3000);
+        this.time.delayedCall(2500, () => {
             this.scene.start('Menu');
         });
     }
@@ -160,17 +158,75 @@ class Logo extends Phaser.Scene {
 }
 
 //TODO: 
-// menu with chef on left side and 3 buttons you can press on right
-// when you hover over have the text change color like in the slide
-// music
 // scaling for everything else?
 class Menu extends Phaser.Scene {
     constructor() {
         super('Menu');
     }
 
-    create() { }
+    create() {
+
+        const w = this.scale.width;
+        const h = this.scale.height;
+        // add menu music and loop
+        this.sound.play('menuMusic', { loop: true });
+
+        // add chef image
+        this.chef = this.add.image(w / 4.7, h / 2 + 40, 'Chef');
+        this.chef.setScale(0.45);
+
+        this.startText = this.add.text(w / 1.4, h / 2 - 100, "Start Game");
+        this.startText.setStyle({
+            fontSize: "48px",
+            color: "yellow",
+            fontFamily: "Impact",
+        }).setInteractive({ useHandCursor: true });
+
+        this.settingsText = this.add.text(w / 1.4, h / 2, "Settings");
+        this.settingsText.setStyle({
+            fontSize: "48px",
+            color: "yellow",
+            fontFamily: "Impact",
+        }).setInteractive({ useHandCursor: true });
+
+        this.creditsText = this.add.text(w / 1.4, h / 2 + 100, "Credits");
+        this.creditsText.setStyle({
+            fontSize: "48px",
+            color: "yellow",
+            fontFamily: "Impact",
+        }).setInteractive({ useHandCursor: true });
+
+
+        // turn into a singular helper function
+        this.startText.on("pointerover", () => {
+            this.startText.setColor("#00ffff");
+            this.sound.play('menuClick');
+        });
+        this.startText.on("pointerout", () => {
+            this.startText.setColor("#ffff00");
+        });
+
+        this.settingsText.on("pointerover", () => {
+            this.settingsText.setColor("#00ffff");
+            this.sound.play('menuClick');
+
+        });
+        this.settingsText.on("pointerout", () => {
+            this.settingsText.setColor("#ffff00");
+        });
+
+        this.creditsText.on("pointerover", () => {
+            this.creditsText.setColor("#00ffff");
+            this.sound.play('menuClick');
+        });
+        this.creditsText.on("pointerout", () => {
+            this.creditsText.setColor("#ffff00");
+        });
+
+    }
+
 }
+
 
 new Phaser.Game({
     width: window.innerWidth,
