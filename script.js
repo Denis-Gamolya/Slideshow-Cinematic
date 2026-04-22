@@ -67,39 +67,111 @@ class Intro extends Phaser.Scene {
 // add egg falling down and cracking into a double yolk
 // need inbetween frames
 // egg falls first then double yolk logo appears
+// scaling for everything else?
 class Logo extends Phaser.Scene {
     constructor() {
         super('Logo');
     }
     create() {
-
         const w = this.scale.width;
         const h = this.scale.height;
 
+        // add 'Double' from logo
         this.logoDouble = this.add.image(1600, 50, 'Logo_double');
-        this.logoDouble.setScale(0.3);
-        this.logoDouble.setPosition(w / 2, h / 2);
+        this.logoDouble.setScale(0.0);
+        this.logoDouble.setPosition(w / 2, h / 3);
 
+        // punch out double
+        this.tweens.add({
+            targets: this.logoDouble,
+            scaleX: 0.3,
+            scaleY: 0.3,
+            duration: 400,
+            delay: 1550,
+            ease: 'Back.out'
+        });
+
+        // add 'Yolk' from logo
         this.logoYolk = this.add.image(1600, 50, 'Logo_yolk');
-        this.logoYolk.setScale(0.25);
-        this.logoYolk.setPosition(w /2, h / 2);
+        this.logoYolk.setScale(0);
+        this.logoYolk.setPosition(w / 2, h / 2);
+
+        // punch out yolk
+        this.tweens.add({
+            targets: this.logoYolk,
+            scaleX: 0.25,
+            scaleY: 0.25,
+            duration: 400,
+            delay: 1850,
+            ease: 'Back.out'
+        });
+
+
+        // add egg
+        this.eggWhole = this.add.image(w / 2, -100, 'saveIcon')
+        this.eggWhole.setScale(0.15)
+
+        // egg falling effect
+        this.tweens.add({
+            targets: this.eggWhole,
+            angle: 360,
+            y: h / 1.3,
+            duration: 1200,
+            ease: 'Cubic.In',
+            onComplete: () => {
+                this.cracking();
+            }
+        });
+
+
+        // add cracked egg
+        this.eggCracked = this.add.image(w / 2, h / 1.3, 'Double Yolk')
+        this.eggCracked.setScale(0.22)
+        this.eggCracked.setAlpha(0)
 
     }
+
+    // helper function to transition falling egg into cracked egg
+    cracking() {
+        this.tweens.add({
+            targets: this.eggWhole,
+            scaleX: 0.3,
+            scaleY: 0.2,
+            duration: 80,
+            yoyo: true,
+            onComplete: () => {                 // after reaching final position make eggWhole invisible
+                this.eggWhole.setAlpha(0);      // make eggCracked visible in its place
+                this.eggCracked.setAlpha(1);
         
-    update() {
+                this.tweens.add({
+                    targets: this.eggCracked,
+                    scaleX: 0.25,
+                    scaleY: 0.25,
+                    duration: 180,
+                    ease: 'Back.Out',
+                });
+
+            }
+        })
+        this.cameras.main.fadeOut(2500);
+        this.time.delayedCall(2200, () => {
+            this.scene.start('Menu');
+        });
     }
+
 }
 
 //TODO: 
 // menu with chef on left side and 3 buttons you can press on right
 // when you hover over have the text change color like in the slide
 // music
+// scaling for everything else?
 class Menu extends Phaser.Scene {
     constructor() {
         super('Menu');
     }
-    
-    create() {}
+
+    create() { }
 }
 
 new Phaser.Game({
