@@ -59,13 +59,30 @@ class Intro extends Phaser.Scene {
         this.oval2.angle += 0.75;
     }
 }
+
+
+// TODO: make logo images transpent
+// have thems scale from 0 to whatever for a punch effect
+// add sound of egg falling / cracking
+// add egg falling down and cracking into a double yolk
+// need inbetween frames
+// egg falls first then double yolk logo appears
 class Logo extends Phaser.Scene {
     constructor() {
         super('Logo');
     }
     create() {
 
-        this.logoDouble = this.add.image(1600, 50, 'Logo_double')
+        const w = this.scale.width;
+        const h = this.scale.height;
+
+        this.logoDouble = this.add.image(1600, 50, 'Logo_double');
+        this.logoDouble.setScale(0.3);
+        this.logoDouble.setPosition(w / 2, h / 2);
+
+        this.logoYolk = this.add.image(1600, 50, 'Logo_yolk');
+        this.logoYolk.setScale(0.25);
+        this.logoYolk.setPosition(w /2, h / 2);
 
     }
         
@@ -73,13 +90,15 @@ class Logo extends Phaser.Scene {
     }
 }
 
+//TODO: 
+// menu with chef on left side and 3 buttons you can press on right
+// when you hover over have the text change color like in the slide
+// music
 class Menu extends Phaser.Scene {
     constructor() {
         super('Menu');
     }
-
-    preload() {}
-
+    
     create() {}
 }
 
