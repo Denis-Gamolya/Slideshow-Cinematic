@@ -4,18 +4,7 @@ class Intro extends Phaser.Scene {
     }
 
     preload() {
-
-        // load all image assets
-        this.load.path = "../Assets/";
-        this.load.image('saveIcon', 'Egg.png');
-        this.load.image('Double Yolk', 'Double Yolk.png');
-        this.load.image('Chef', 'Chef.png');
-        this.load.image('Pan_pointer', 'Pan pointer.png');
-        this.load.image('Logo_double', 'Logo_Double.png');
-        this.load.image('Logo_yolk', 'Logo_Yolk.png');
-
-        // load all sounds
-        this.load.path = "../Sounds/";
+        preloadAssets(this);
     }
 
     create() {
