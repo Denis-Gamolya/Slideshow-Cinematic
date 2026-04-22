@@ -62,11 +62,8 @@ class Intro extends Phaser.Scene {
 
 
 // TODO: make logo images transpent
-// have thems scale from 0 to whatever for a punch effect
 // add sound of egg falling / cracking
 // add egg falling down and cracking into a double yolk
-// need inbetween frames
-// egg falls first then double yolk logo appears
 // scaling for everything else?
 class Logo extends Phaser.Scene {
     constructor() {
@@ -140,6 +137,7 @@ class Logo extends Phaser.Scene {
             duration: 80,
             yoyo: true,
             onComplete: () => {                 // after reaching final position make eggWhole invisible
+                this.sound.play('eggCrack');
                 this.eggWhole.setAlpha(0);      // make eggCracked visible in its place
                 this.eggCracked.setAlpha(1);
         
