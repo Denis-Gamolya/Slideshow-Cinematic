@@ -13,7 +13,8 @@ class Intro extends Phaser.Scene {
 
     create() {
         this.add.text(10, 10, "Loading..");
-        this.add.image(20, 10, 'Egg');
+        const egg = this.add.image(120, 20, 'Egg');
+        egg.setScale(0.02);
         this.input.on('pointerdown', () => this.scene.start('body'));
     }
 }
@@ -54,7 +55,7 @@ I hope it shows correctly even though this last line is very long.`
 }
 
 new Phaser.Game({
-    width: 640,
-    height: 480,
+    width: window.innerWidth,
+    height: window.innerHeight,
     scene: [Intro, Body],
 });
