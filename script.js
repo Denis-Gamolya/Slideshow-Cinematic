@@ -124,8 +124,13 @@ class Logo extends Phaser.Scene {
         this.eggCracked.setScale(0.22)
         this.eggCracked.setAlpha(0)
 
-    }
 
+    this.time.addEvent({
+    delay: 2800,
+    callback: this.transition,
+    callbackScope: this
+});
+    }
     // helper function to transition falling egg into cracked egg
     cracking() {
         this.tweens.add({
@@ -148,13 +153,16 @@ class Logo extends Phaser.Scene {
                 });
 
             }
-        })
-        this.cameras.main.fadeOut(3000);
-        this.time.delayedCall(2500, () => {
-            this.scene.start('Menu');
         });
     }
 
+    transition() {
+        this.cameras.main.fadeOut(800);
+
+        this.cameras.main.once('camerafadeoutcomplete', () => {
+            this.scene.start('Menu');
+        });
+    }
 }
 
 //TODO: 

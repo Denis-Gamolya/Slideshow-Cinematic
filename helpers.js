@@ -2,7 +2,7 @@
 function preloadAssets(scene) {
 
     // load all image assets
-    scene.load.path = "../Assets/";
+    scene.load.path = "Assets/";
     scene.load.image('saveIcon', 'Egg.png');
     scene.load.image('Double Yolk', 'Double Yolk.png');
     scene.load.image('Chef', 'Chef.png');
@@ -11,7 +11,7 @@ function preloadAssets(scene) {
     scene.load.image('Logo_yolk', 'Logo_Yolk.png');
 
     // load all sounds
-    scene.load.path = "../Sounds/";
+    scene.load.path = "Sounds/";
     scene.load.audio('eggCrack', 'egg_crack.mp3');
     scene.load.audio('menuMusic', 'menu_music.mp3');
     scene.load.audio('menuClick', 'menu_click.mp3');
